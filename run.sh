@@ -26,10 +26,11 @@ sudo usermod -aG docker $USER
 newgrp docker
 
 #create folder to logs
-mkdir results
-mkdir results/exp$exp
-
-
-nohup docker run --rm -v ${PWD}/results/exp$exp/:/noise/RESULTS_flakeflagger denini/noise-instrumentation-flakeflagger-$name $runs $exp  &> exp$exp.log &
+resultsdir="results/$name_exp$exp/"
+mkdir -p $resultsdir
 
 echo "running project $name, with exp$exp for $runs time(s)"
+
+docker run --rm -v ${PWD}/$resultsdir:/noise/RESULTS_flakeflagger denini/noise-instrumentation-flakeflagger-$name $runs $exp  &> exp$exp.log
+
+cp exp$exp.log $resultsdir/
