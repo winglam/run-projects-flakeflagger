@@ -31,6 +31,6 @@ mkdir -p $resultsdir
 
 echo "running project $name, with exp$exp for $runs time(s)"
 
-docker run --rm -v ${PWD}/$resultsdir:/noise/RESULTS_flakeflagger denini/noise-instrumentation-flakeflagger-$name-rerun $runs rerun  &> exp$exp.log
+docker run --rm -v ${PWD}/$resultsdir:/noise/RESULTS_flakeflagger --entrypoint "/noise/entrypoint_flakeflagger.sh" denini/noise-instrumentation-flakeflagger-$name-rerun $runs $runs   &> exp$exp.log
 
 cp exp$exp.log $resultsdir/
